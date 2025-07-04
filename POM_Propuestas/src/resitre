@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- script: dotnet restore
+  displayName: 'Restaurar dependencias'
+
+- script: dotnet build --configuration Release
+  displayName: 'Compilar'
+
+- script: dotnet test --configuration Release --no-build --verbosity normal
+  displayName: 'Ejecutar pruebas'
